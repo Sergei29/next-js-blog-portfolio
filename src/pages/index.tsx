@@ -1,9 +1,22 @@
-import { NextPage } from "next"
+import { NextPage, GetStaticProps } from "next"
+import { join } from "path"
 
 import PortfolioSummaryCard from "@/components/PortfolioSummaryCard"
 import { ItemsList, BaseLayout } from "@/components/layouts"
 import BlogSummaryCard from "@/components/BlogSummaryCard"
 import { blogs, portfolios } from "@/constants"
+
+import { getBlogFileNames, getBlogFileContent } from "@/lib"
+
+export const getStaticProps: GetStaticProps = async (_ctx) => {
+  const blogFileNames = await getBlogFileNames()
+  const content = await getBlogFileContent(blogFileNames[0])
+  console.log({ blogFileNames, content })
+
+  return {
+    props: {},
+  }
+}
 
 const HomePage: NextPage = () => {
   return (
